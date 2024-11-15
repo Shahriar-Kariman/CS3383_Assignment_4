@@ -161,7 +161,7 @@ $$
 \end{split}
 $$
 
-The run time analysis of the algorithm is $\Theta(n^2)$
+The run time analysis of the algorithm is $\Theta(n^2)$.
 
 ## Question 5 - Longest Decreaseing Subsequence
 
