@@ -69,3 +69,57 @@ def dynamic_smallestSubSet(S, g):
     for j in range(g+1):
       pass
 ```
+
+## Question 3 - Maximum Sum of any Contiguous Subarray
+
+If a subarray already has a negative sum then there is no point of researching that sub array further. If I have start and end of the subarray stored somewhere and keep iterating through the loop updating the maximum value and start and end.
+
+```py
+def maximumSubArraySum(A):
+  max = current_sum = start = end = 0
+  good_subarrays = []
+  for i in range(len(A)):
+    current_sum += A[i]
+    if current_sum<0 and end>=start:
+      good_subarrays.append({'start':start, 'end': end, 'sum': max})
+      max, current_sum = 0
+      start = end = i+1
+    elif max<current_sum:
+      end = i
+      max = current_sum
+  # After storing all of the subarrays with a positive vlaue that cant improve anymore
+  # by adding new elements
+  max = 0
+  for i in range(len(good_subarrays)):
+    sub_arr = good_subarrays[i]
+    if sub_arr['sum'] > max:
+      start = sub_arr['start']
+      end = sub_arr['end']
+  return A[start:end+1]
+```
+
+Well after all of that I realize the question wasn't asking for the subarray just the sum but since I spent so much time writing that I am not going to remove it.
+
+But here is the shorter version:
+
+```py
+def maximumSubArraySum(A):
+  max = current_sum = 0
+  for i in range(len(A)):
+    current_sum += A[i]
+    if current_sum<0:
+      current_sum = 0
+    elif max<current_sum:
+      max = current_sum
+  return max
+```
+
+So evidently we are looping through the entire array once so the time complexity if $\Theta(n)$.
+
+**Note:** I agree this algorithm may not look like a dynamic programing algorithm but just because an algorithm does not have a big table doesn't mean it isn't a dynamic programing algorithm. In this case since I am storing the previous max and reusing it to get to the correct solution it technically qualifies as a dynamic programing algorithm.
+
+## Question 4 - Number Solitaire
+
+## Question 5 - Longest Decreaseing Subsequence
+
+## Question 6
