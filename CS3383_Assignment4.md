@@ -122,4 +122,42 @@ So evidently we are looping through the entire array once so the time complexity
 
 ## Question 5 - Longest Decreaseing Subsequence
 
-## Question 6
+## Question 6 - Distinct Subsequences Problem
+
+Well I dont want to right a brute force algorithm and configure it to a dynamic algorithm. so I will just start by making a table and set the first row to all $1$ s cause if $T$ is empty then there should always be $1$ subsequence in any $S$.
+
+And then I figured as I am looping through every combination of $i$ and $j$ I could just include or not include the matching characters and keep going and if they didnt match then the count would be the same as if the $i$ wasnt there.
+
+### Exhibit A
+
+|       |j=0 | r | a | b | b | i | t |
+|-------|----|---|---|---|---|---|---|
+| i=0   | 0  | 0 | 0 | 0 | 0 | 0 | 0 |
+| r     | 1  | 1 | 0 | 0 | 0 | 0 | 0 |
+| a     | 1  | 1 | 1 | 0 | 0 | 0 | 0 |
+| b     | 1  | 1 | 1 | 1 | 0 | 0 | 0 |
+| b     | 1  | 1 | 1 | 2 | 1 | 0 | 0 |
+| b     | 1  | 1 | 1 | 3 | 3 | 0 | 0 |
+| i     | 1  | 1 | 1 | 3 | 3 | 3 | 0 |
+| t     | 1  | 1 | 1 | 3 | 3 | 3 | 3 |
+
+### Algorithm
+
+```py
+def numDistinctSubsequence(S, T):
+  m, n = len(S), len(T)
+  # an (m+1) by (n+1) table
+  dp = [[0]*(n+1) for _ in range(m+1)]
+  
+  for i in range(m+1):
+    dp[i][0] = 1
+  
+  for i in range(1, m+1):
+    for j in range(1, n+1):
+      if S[i-1]==T[j-1]:
+        dp[i][j] = dp[i-1][j-1] + dp[i-1][j]
+      else:
+        dp[i][j] = dp[i-1][j]
+```
+
+And the time complexity of the algorithm is obviously $\Theta(m \times n)$ since the first loop is executed $m$ times and the inner loop executes $n \times m$ times as a result.
