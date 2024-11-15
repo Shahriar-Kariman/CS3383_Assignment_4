@@ -120,6 +120,49 @@ So evidently we are looping through the entire array once so the time complexity
 
 ## Question 4 - Number Solitaire
 
+So if I start from the $i=0$ and $j=n$ and go inward my answer will always depend on from what end we pick the numbers:
+
+$$
+\begin{split}
+  ans(i,j) = max\ of \rightarrow
+    \begin{cases}
+      ans(i+1,j-1) + A_i \times A_j
+      \\
+      ans(i+2,j) + A_i \times A_{i+1}
+      \\
+      ans(i,j-2) + A_j \times A_{j-1}
+    \end{cases}
+\end{split}
+$$
+
+Considering that the algorithm should be fairly straight forward. I put $i$ at the end and kept grwoing the size of the problem much like question 1.
+
+```py
+def numberSolitaire(A):
+  n = len(A)
+  dp = [[0]*(n) for _ in range(n)]
+  for i in range(n-1, -1, -1):
+    for j in range(i+1, n):
+      val_1 = val_2 = val_3 = 0
+      val_1 = dp[i+1][j-1] + A[i]*A[j]
+      if i+1 < n:
+        val_2 = dp[i+2][j] + A[i]*A[i+1]
+      if j-1 > 0:
+        val_2 = dp[i][j-2] + A[j]*A[j-1]
+      dp[i][j] = max(val_1, val_2, val_3)
+  return dp[0][n-1]
+```
+
+And cosidering the number of time the code in the inner loop is executed is:
+
+$$
+\begin{split}
+  n + (n-1) + ... \ + 1 = \sum_{k=0}^{n} n-k = \frac{n\times(n-1)}{2}
+\end{split}
+$$
+
+The run time analysis of the algorithm is $\Theta(n^2)$
+
 ## Question 5 - Longest Decreaseing Subsequence
 
 ## Question 6 - Distinct Subsequences Problem
