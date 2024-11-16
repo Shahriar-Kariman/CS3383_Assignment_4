@@ -16,7 +16,7 @@ $$
 \end{split}
 $$
 
-If I have an expression of length $n$ and I start from the $1_{st}$ character and keep expanding the size of the problem then i will keep reusing the calcualted values.
+If I have an expression of length $n$ and I start from the $1_{st}$ character and keep expanding the size of the problem then i will keep reusing the calculated values.
 
 ```py
 def catalan(n):
@@ -30,9 +30,7 @@ def catalan(n):
 
 ## Question 2 - Smallest Subset Sum
 
-So if I was to implement this recursively using brute force calcualtion I would do it like this:
-
-**Comment:** I know this isn't part of the solution I just thought it might help me solve the problem and it sort of did.
+So if I was to implement this recursively using brute force calculation I would do it like this:
 
 ```py
 
@@ -60,7 +58,11 @@ def smallestSubsetSum(S, g):
     return {"success": len(smallest_subset)>0 and len(smallest_subset)<n, "subset": smallest_subset}
 ```
 
-If I use an $i \times j$ table where i is the number of elements and j is the value to sum upto and store the results wether or not a set can sum up to j would be wether the previous set could have summed up to j or if the subtracting the i_th element can get me a number the previous sets could have summed up to.
+**Comment:** I know this isn't part of the solution I just thought it might help me solve the problem and it sort of did.
+
+### Actual Solution
+
+If I use an $(n+1) \times (g+1)$ table with rows $i$ and columns $j$ where $i$ is the number of elements and $j$ is the value to sum upto and store the results whether or not a set can sum up to $j$ would be whether the previous set could have summed up to $j$ or if the subtracting the $i_{th}$ element can get me a number the previous sets could have summed up to.
 
 **Note:** The values inside the table are the size of the subset that would sum upto the number.
 
@@ -114,6 +116,8 @@ def maximumSubArraySum(A):
   return A[start:end+1]
 ```
 
+### Final Solution
+
 Well after all of that I realize the question wasn't asking for the subarray just the sum but since I spent so much time writing that I am not going to remove it.
 
 But here is the shorter version:
@@ -132,7 +136,7 @@ def maximumSubArraySum(A):
 
 So evidently we are looping through the entire array once so the time complexity if $\Theta(n)$.
 
-**Note:** I agree this algorithm may not look like a dynamic programing algorithm but just because an algorithm does not have a big table doesn't mean it isn't a dynamic programing algorithm. In this case since I am storing the previous max and reusing it to get to the correct solution it technically qualifies as a dynamic programing algorithm.
+**Note:** I agree this algorithm may not look like a dynamic programming algorithm but just because an algorithm does not have a big table doesn't mean it isn't a dynamic programming algorithm. In this case since I am storing the previous max and reusing it to get to the correct solution it technically qualifies as a dynamic programming algorithm.
 
 ## Question 4 - Number Solitaire
 
@@ -151,7 +155,7 @@ $$
 \end{split}
 $$
 
-Considering that the algorithm should be fairly straight forward. I put $i$ at the end and kept grwoing the size of the problem much like question 1.
+Considering that the algorithm should be fairly straight forward. I put $i$ at the end and kept growing the size of the problem much like question 1.
 
 ```py
 def numberSolitaire(A):
@@ -171,7 +175,7 @@ def numberSolitaire(A):
 
 ## Question 5 - Longest Descending Subsequence
 
-So at first I thought the question was asking for the longest consecitive subsequence at which case this *would have been* the correct algorithm:
+So at first I thought the question was asking for the longest consecutive subsequence at which case this *would have been* the correct algorithm:
 
 ```py
 def longetsDescendingSubsequence(A):
@@ -188,7 +192,7 @@ def longetsDescendingSubsequence(A):
 
 But then I read the question again and noticed that you can drop any element that doesn't fit in the order.
 
-Considering that the answer is still pretty easy I just have to keep growing the size of the problem and store the result of each subproblem.
+The answer is still pretty easy I just have to keep growing the size of the problem and store the result of each subproblem.
 
 I chose to start from the left because I know that if element $j$ comes after element $i$ and $A[j]<A[i]$ then the longest sequence is going to be $Max\{result[j],result[i]+1\}$ and if I keep calcualting the last elements result beased on the elements before it I will have my answer.
 
