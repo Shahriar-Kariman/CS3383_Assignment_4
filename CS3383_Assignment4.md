@@ -141,7 +141,7 @@ Considering that the algorithm should be fairly straight forward. I put $i$ at t
 def numberSolitaire(A):
   n = len(A)
   dp = [[0]*(n) for _ in range(n)]
-  for i in range(n-1, -1, -1):
+  for i in range(n-1, -1, -1): # n-1 to 0
     for j in range(i+1, n):
       val_1 = val_2 = val_3 = 0
       val_1 = dp[i+1][j-1] + A[i]*A[j]
@@ -165,11 +165,11 @@ The run time analysis of the algorithm is $\Theta(n^2)$.
 
 ## Question 5 - Longest Descending Subsequence
 
-This one is easy I can just store the value of the longest descending subsequence for every element upto that element and store the value for each element inside an array of the same size and I can loop through it and get the biggest number.
+So at first I thought the question was asking for the longest consecitive subsequence at which case this *would have been* the correct algorithm:
 
 ```py
 def longetsDescendingSubsequence(A):
-  lengths = [0]*len(A)
+  lengths = [1]*len(A)
   length = 0
   for i in range(len(A)):
     if A[i]>A[i-1]:
@@ -177,16 +177,25 @@ def longetsDescendingSubsequence(A):
     else:
       length += 1
     lengths[i] = length
-  max_length = 0
-  for i in range(len(lengths)):
-    if lengths[i]>max_length:
-      max_length = lengths[i]
-  return max_length
+  return max(lengths)
 ```
 
-### Offical Question for the Prof (if he ever reads this)
+But then I read the question again and noticed that you can drop any element that doesn't fit in the order.
 
-Why are the questions not in order of difficaulty? This should have been the very first question.
+Considering that the answer is still pretty easy I just have to keep growing the size of the problem and store the result of each subproblem.
+
+I chose to start from the left because I know that if element $j$ comes after element $i$ and $A[j]<A[i]$ then the longest sequence is going to be $Max\{result[j],result[i]+1\}$ and if I keep calcualting the last elements result beased on the elements before it I will have my answer.
+
+```py
+def longetsDescendingSubsequence(A):
+  n = len(A)
+  results = [1]*n
+  for i in range(n-2,-1,-1): # n-2 to 0
+    for j in range(i+1,n):
+      if A[j]<A[i]:
+        results[i] = max(results[i],results[j]+1)
+  return max(results)
+```
 
 ## Question 6 - Distinct Subsequences Problem
 
