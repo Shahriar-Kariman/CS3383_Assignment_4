@@ -153,16 +153,6 @@ def numberSolitaire(A):
   return dp[0][n-1]
 ```
 
-And cosidering the number of time the code in the inner loop is executed is:
-
-$$
-\begin{split}
-  n + (n-1) + ... \ + 1 = \sum_{k=0}^{n} n-k = \frac{n\times(n-1)}{2}
-\end{split}
-$$
-
-The run time analysis of the algorithm is $\Theta(n^2)$.
-
 ## Question 5 - Longest Descending Subsequence
 
 So at first I thought the question was asking for the longest consecitive subsequence at which case this *would have been* the correct algorithm:
