@@ -163,7 +163,30 @@ $$
 
 The run time analysis of the algorithm is $\Theta(n^2)$.
 
-## Question 5 - Longest Decreaseing Subsequence
+## Question 5 - Longest Descending Subsequence
+
+This one is easy I can just store the value of the longest descending subsequence for every element upto that element and store the value for each element inside an array of the same size and I can loop through it and get the biggest number.
+
+```py
+def longetsDescendingSubsequence(A):
+  lengths = [0]*len(A)
+  length = 0
+  for i in range(len(A)):
+    if A[i]>A[i-1]:
+      length = 0
+    else:
+      length += 1
+    lengths[i] = length
+  max_length = 0
+  for i in range(len(lengths)):
+    if lengths[i]>max_length:
+      max_length = lengths[i]
+  return max_length
+```
+
+### Offical Question for the Prof (if he ever reads this)
+
+Why are the questions not in order of difficaulty? This should have been the very first question.
 
 ## Question 6 - Distinct Subsequences Problem
 
