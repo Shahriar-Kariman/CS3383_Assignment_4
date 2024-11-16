@@ -32,19 +32,22 @@ def catalan(n):
 
 So if I was to implement this recursively using brute force calcualtion I would do it like this:
 
+**Comment:** I know this isn't part of the solution I just thought it might help me solve the problem and it sort of did.
+
 ```py
 
 smallest_subset = [0]*n
 
 def smallestSubsetSum(S, g):
   if g<0: # Failed
-    return {"success": True, "subset": []}
+    return {"success": False, "subset": []}
   elif g==0: # success
     s = []
     for i in range(len(S)):
       if S[i]<0:
         s.append(S[i])
     return {"success": False, "subset": s}
+  # Otherwise
   for i in range(len(S)):
     k = S[i]
     if k>0:
@@ -57,17 +60,30 @@ def smallestSubsetSum(S, g):
     return {"success": len(smallest_subset)>0 and len(smallest_subset)<n, "subset": smallest_subset}
 ```
 
-Now if $S$ was in descending order I would essintially be doing a greedy search algorithm if I ran the smallestSubsetSum algorithm on a subset on the left and grow the subset each time.
+If I use an $i \times j$ table where i is the number of elements and j is the value to sum upto and store the results wether or not a set can sum up to j would be wether the previous set could have summed up to j or if the subtracting the i_th element can get me a number the previous sets could have summed up to.
+
+**Note:** The values inside the table are the size of the subset that would sum upto the number.
 
 ```py
 def dynamic_smallestSubSet(S, g):
-  mergeSort(S)
   n = len(S)
-  table = [[float('inf')]*(g+1) for _ in range(n)]
-  table[0][0] = 0
+  dp = [[float('inf')]*(g+1) for _ in range(n+1)]
+  dp[0][0] = 0
   for i in range(1, n+1):
     for j in range(g+1):
-      pass
+      dp[i][j] = dp[i-1][j] # if I dont include the elemnt at i-1
+      if j>=S[i-1]:
+        dp[i][j] = min(dp[i-1][j],dp[i-1][j-S[i-1]]+1)
+  if dp[n][g] == float('inf'):
+    return None
+  subset = []
+  i, j = n, g
+  while i>0 and j>0:
+    if dp[i][j] != dp[i-1][j]: # i-1 was picked
+      subset.append(S[i-1])
+      j -= S[i-1]
+    i -= 1
+  return subset
 ```
 
 ## Question 3 - Maximum Sum of any Contiguous Subarray
