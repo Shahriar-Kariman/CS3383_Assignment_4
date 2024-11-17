@@ -243,6 +243,7 @@ def numDistinctSubsequence(S, T):
         dp[i][j] = dp[i-1][j-1] + dp[i-1][j]
       else:
         dp[i][j] = dp[i-1][j]
+  return dp[m][n]
 ```
 
 And the time complexity of the algorithm is obviously $\Theta(m \times n)$ since the first loop is executed $m$ times and the inner loop executes $n \times m$ times as a result.
